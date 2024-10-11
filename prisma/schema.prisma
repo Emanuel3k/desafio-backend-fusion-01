@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model StarSystem {
+  id          String   @id @default(uuid(7))
+  name        String
+  planets     Planet[]
+  description String
+
+  @@index([id])
+  @@map("star_systems")
+}
+
+model Planet {
+  id           String      @id @default(uuid(7))
+  name         String
+  climate      String
+  terrain      String
+  Character    Character[]
+  population   Int
+  StarSystem   StarSystem  @relation(fields: [starSystemId], references: [id], onDelete: Cascade)
+  starSystemId String
+
+  @@index([id])
+  @@map("planets")
+}
+
+model Character {
+  id           String      @id @default(uuid(7))
+  name         String
+  specie       String
+  Spaceship    Spaceship[]
+  afiliation   String
+  HomePlanet   Planet      @relation(fields: [homePlanetId], references: [id], onDelete: Cascade)
+  homePlanetId String
+
+  @@index([id])
+  @@map("characters")
+}
+
+model Spaceship {
+  id           String    @id @default(uuid(7))
+  name         String
+  owner        Character @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  model        String
+  ownerId      String
+  capacity     Int
+  manufacturer String
+}
