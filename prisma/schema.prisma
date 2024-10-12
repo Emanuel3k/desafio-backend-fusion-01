@@ -13,6 +13,9 @@ model StarSystem {
   planets     Planet[]
   description String
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([id])
   @@map("star_systems")
 }
@@ -27,7 +30,10 @@ model Planet {
   StarSystem   StarSystem  @relation(fields: [starSystemId], references: [id], onDelete: Cascade)
   starSystemId String
 
-  @@index([id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([id, starSystemId])
   @@map("planets")
 }
 
@@ -40,7 +46,10 @@ model Character {
   HomePlanet   Planet      @relation(fields: [homePlanetId], references: [id], onDelete: Cascade)
   homePlanetId String
 
-  @@index([id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([id, homePlanetId])
   @@map("characters")
 }
 
@@ -52,4 +61,10 @@ model Spaceship {
   ownerId      String
   capacity     Int
   manufacturer String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([id, ownerId])
+  @@map("spaceships")
 }
