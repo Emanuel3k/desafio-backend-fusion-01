@@ -1,12 +1,14 @@
 import { Character, StarSystem } from "@/domain";
 
 export class Planet {
-  id: string;
+  id?: string;
   name: string;
   climate: string;
   terrain: string;
-  Character?: Character[];
+  characters?: Character[];
   population: number;
-  StarSystem?: StarSystem;
+  starSystem?: StarSystem;
   starSystemId: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
