@@ -1,21 +1,42 @@
-import { Controller, Get, Res } from "@nestjs/common";
+import { Body, Controller, Get, Post, Res } from "@nestjs/common";
 import { Response } from "express";
 import { NO_CONTENT, OK } from "http-status";
-import { IPlanetService } from "@/services/planet/IPlanetService";
+
+import { CreatePlanetDTO } from "@/domain";
+import { IPlanetService } from "@/services";
 import { isEmpty } from "@/utils";
 
 @Controller("planets")
 export class PlanetController {
   constructor(private readonly planetService: IPlanetService) {}
 
+  @Post()
+  async create(@Res() res: Response, @Body() body: CreatePlanetDTO) {
+    try {
+      const planet = await this.planetService.create(body);
+
+      res.status(OK).send(planet);
+    } catch (error) {
+      console.error(error);
+
+      throw error;
+    }
+  }
+
   @Get()
   async getAll(@Res() res: Response) {
-    const planets = await this.planetService.getAll();
+    try {
+      const planets = await this.planetService.getAll();
 
-    if (isEmpty(planets)) {
-      return res.status(NO_CONTENT).send();
+      if (isEmpty(planets)) {
+        return res.status(NO_CONTENT).send();
+      }
+
+      res.status(OK).send(planets);
+    } catch (error) {
+      console.error(error);
+
+      throw error;
     }
-
-    res.status(OK).send(planets);
   }
 }
