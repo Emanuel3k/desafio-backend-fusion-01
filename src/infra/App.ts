@@ -1,6 +1,7 @@
-import { NestFactory } from "@nestjs/core";
-import { AppModule } from "@/infra/App.module";
 import { ValidationPipe } from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
+
+import { AppModule } from "@/infra/App.module";
 
 class App {
   async server() {
