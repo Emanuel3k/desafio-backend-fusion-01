@@ -20,4 +20,8 @@ export class PlanetService implements IPlanetService {
   async getAll(): Promise<Planet[]> {
     return this.planetRepository.getAll();
   }
+
+  async getById(id: string): Promise<Planet> {
+    return this.planetRepository.getById(id);
+  }
 }

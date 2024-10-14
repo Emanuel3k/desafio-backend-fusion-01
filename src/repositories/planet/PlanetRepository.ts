@@ -9,12 +9,14 @@ export class PlanetRepository implements IPlanetRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(planet: Planet): Promise<Planet> {
-    const { starSystem: _starSystem, characters: _character, ...data } = planet;
-
-    return this.prisma.planet.create({ data });
+    return this.prisma.planet.create({ data: planet });
   }
 
   async getAll(): Promise<Planet[]> {
     return this.prisma.planet.findMany();
+  }
+
+  async getById(id: string) {
+    return this.prisma.planet.findUnique({ where: { id } });
   }
 }

@@ -4,4 +4,6 @@ export abstract class IPlanetRepository {
   abstract create(planet: Planet): Promise<Planet>;
 
   abstract getAll(): Promise<Planet[]>;
+
+  abstract getById(id: string): Promise<Planet | null>;
 }
