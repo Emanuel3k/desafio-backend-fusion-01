@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Next, Post, Req, Res } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Next,
+  Post,
+  Req,
+  Res,
+} from "@nestjs/common";
 import { NextFunction, Request, Response } from "express";
 import { NO_CONTENT, OK } from "http-status";
 
@@ -56,6 +65,23 @@ export class PlanetController {
       }
 
       res.status(OK).send(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  @Delete(":id")
+  async deleteById(
+    @Res() res: Response,
+    @Req() req: Request,
+    @Next() next: NextFunction,
+  ) {
+    try {
+      const { id } = req.params;
+
+      await this.planetService.deleteById(id);
+
+      res.status(NO_CONTENT).send();
     } catch (error) {
       next(error);
     }

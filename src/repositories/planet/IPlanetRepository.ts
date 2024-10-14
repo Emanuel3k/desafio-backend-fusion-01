@@ -6,4 +6,6 @@ export abstract class IPlanetRepository {
   abstract getAll(): Promise<Planet[]>;
 
   abstract getById(id: string): Promise<Planet | null>;
+  
+  abstract deleteById(id: string): Promise<void>;
 }

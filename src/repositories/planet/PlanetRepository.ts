@@ -19,4 +19,8 @@ export class PlanetRepository implements IPlanetRepository {
   async getById(id: string) {
     return this.prisma.planet.findUnique({ where: { id } });
   }
+
+  async deleteById(id: string) {
+    await this.prisma.planet.delete({ where: { id } });
+  }
 }

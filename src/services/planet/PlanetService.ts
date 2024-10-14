@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 
 import { CreatePlanetDTO, Planet, PlanetMapper } from "@/domain";
 import { IPlanetRepository } from "@/repositories";
@@ -23,5 +23,15 @@ export class PlanetService implements IPlanetService {
 
   async getById(id: string): Promise<Planet> {
     return this.planetRepository.getById(id);
+  }
+
+  async deleteById(id: string): Promise<void> {
+    const planet = await this.planetRepository.getById(id);
+
+    if (!planet) {
+      throw new BadRequestException("Planet not found");
+    }
+
+    return this.planetRepository.deleteById(id);
   }
 }
